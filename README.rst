@@ -1,8 +1,8 @@
 =============
-object_viewer
+Object Viewer
 =============
 
-A 2d viewer for objects
+A 2d viewer for moving object's representation
 
 
 * Free software: MIT license
