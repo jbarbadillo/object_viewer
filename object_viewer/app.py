@@ -15,6 +15,7 @@ class ObjectViewer:
         self.data = {'x': [],
                      'y': [],
                      'uid': []} # generate data with pandas cols?
+        self.graph_source = None
         self.figure = None
         self.graph_plot = None
         self._display_graph()
@@ -27,7 +28,7 @@ class ObjectViewer:
     def _display_graph(self):
         # TODO: generate source using pandas and injecting data every second
 
-        graph_source = ColumnDataSource(self.data)
+        self.graph_source = ColumnDataSource(self.data)
         # Create figure
         self.figure = figure(title='2d map',
                              tools='pan,box_zoom,box_select,reset',
@@ -35,12 +36,13 @@ class ObjectViewer:
                              plot_height=600)
 
         # Create plot
-        self.graph_plot = self.figure.circle('x', 'y', source=graph_source, size=20, color='navy', alpha=0.6,
+        self.graph_plot = self.figure.circle('x', 'y', source=self.graph_source, size=20, color='navy', alpha=0.6,
                                              line_color="#3288bd", line_width=3)
 
-    def update_source(self, data):
-        self.graph_plot.data_source = ColumnDataSource(data)
-
+    def update_source(self, new_data):
+        self.graph_source = ColumnDataSource(new_data)
+        self.graph_plot = self.figure.circle('x', 'y', source=self.graph_source, size=20, color='navy', alpha=0.6,
+                                             line_color="#3288bd", line_width=3)
 
 if __name__ == "__main__":
     print("Started Object viewer {}".format(__version__ ))
