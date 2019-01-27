@@ -3,6 +3,7 @@
 """Main module."""
 
 from object_viewer.__init__ import __version__
+import pandas as pd
 from bokeh.plotting import figure, output_file, show
 from bokeh import models
 
