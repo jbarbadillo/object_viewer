@@ -2,12 +2,15 @@
 
 """Main module."""
 
-from object_viewer.__init__ import __version__
 import pandas as pd
 from bokeh.plotting import figure, output_file, show
 from bokeh.models import ColumnDataSource
 
+from object_viewer.__init__ import __version__
+
 class ObjectViewer:
+    """ Object renderer"""
+
     def __init__(self):
         self.coords = {} # generate data with pandas cols?
         self.figure = None
@@ -43,11 +46,6 @@ if __name__ == "__main__":
 
     # output to static HTML file
     output_file("line.html")
-
-    circle_x = [1, 2]
-    circle_y = [6, 7]
-    square_x = [1, 2]
-    square_y = [6.1, 7.1]
 
     viewer = ObjectViewer()
     viewer.create_page()
