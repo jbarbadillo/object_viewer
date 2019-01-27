@@ -12,7 +12,7 @@ A 2d viewer for moving object's representation
 Features
 --------
 
-* TODO
+The object viewer draws flows of objects.
 
 Credits
 -------
