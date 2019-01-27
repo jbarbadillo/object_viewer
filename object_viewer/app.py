@@ -3,7 +3,7 @@
 """Main module."""
 
 from object_viewer.__init__ import __version__
-from bokeh.plotting import figure, output_file, show
+from bokeh.plotting import figure, output_file, show, hplot
 from bokeh import models
 
 def render_plot(circle_x, circle_y, square_x, square_y):
@@ -19,7 +19,13 @@ class ObjectViewer:
         self.graph_fig = None
         self.graph_plot = None
         self._display_graph()
-            
+
+        # self.graph_plot.data_source.on_change('selected', self.graph_update)
+
+    def create_page(self):
+        show(hplot(self.graph_fig))
+        return
+
     def _display_graph(self):
         # Generate source
         graph_source = models.ColumnDataSource(self.coords)
