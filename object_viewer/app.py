@@ -4,6 +4,7 @@
 
 from object_viewer.__init__ import __version__
 from bokeh.plotting import figure, output_file, show
+from bokeh import models
 
 def render_plot(circle_x, circle_y, square_x, square_y):
     p.circle_x(circle_x, circle_y, size=20, color="navy", alpha=0.5)
@@ -11,6 +12,23 @@ def render_plot(circle_x, circle_y, square_x, square_y):
 
     # show the results
     show(p)
+
+class ObjectViewer:
+    def __init__(self):
+        self.coords = {}
+        self.graph_fig = None
+        self.graph_plot = None
+        self._display_graph()
+            
+    def _display_graph(self):
+        # Generate source
+        graph_source = models.ColumnDataSource(self.coords)
+        # Create figure
+        self.graph_fig = figure(title='2d map', tools='pan,box_zoom,box_select,reset')
+        
+        # Create plot
+        self.graph_plot = self.graph_fig.scatter('x', 'y', source=graph_source, color='color', alpha=0.6)
+        return
 
 if __name__ == "__main__":
     print("Started Object viewer {}".format(__version__ ))
@@ -25,7 +43,8 @@ if __name__ == "__main__":
     square_x = [1, 2]
     square_y = [6.1, 7.1]
     
-    render_plot(circle_x, circle_y, square_x, square_y)
+    viewer = ObjectViewer()
+
 
 
     
