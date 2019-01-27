@@ -25,7 +25,7 @@ class ObjectViewer:
         # TODO: generate source using pandas and injecting data every second
 
         data = {'x': [1, 2, 3, 4, 5],
-                'y': [6, 7, 2, 3, 6]}]
+                'y': [6, 7, 2, 3, 6]}
 
         graph_source = ColumnDataSource(data)
         # Create figure
