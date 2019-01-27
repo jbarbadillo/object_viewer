@@ -15,8 +15,12 @@ if __name__ == "__main__":
     p = figure(plot_width=400, plot_height=400)
 
     # add a circle renderer with a size, color, and alpha
-    p.circle([1, 2, 3, 4, 5], [6, 7, 2, 4, 5], size=20, color="navy", alpha=0.5)
-    p.square([1, 2, 3, 4, 5], [7, 8, 3, 5, 6], size=20, color="olive", alpha=0.5)
+    circle_x = [1, 2, 3, 4, 5]
+    circle_y = [6, 7, 2, 4, 5]
+    square_x = [1, 2, 3, 4, 5]
+    square_y = [7, 8, 3, 5, 6]
+    p.circle_x(circle_x, circle_y, size=20, color="navy", alpha=0.5)
+    p.square(square_x, square_y, size=20, color="olive", alpha=0.5)
 
 
     # show the results
