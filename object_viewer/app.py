@@ -12,7 +12,9 @@ class ObjectViewer:
     """ Object renderer"""
 
     def __init__(self):
-        self.coords = {} # generate data with pandas cols?
+        self.data = {'x': [],
+                       'y': [],
+                       'uid': []} # generate data with pandas cols?
         self.figure = None
         self.graph_plot = None
         self._display_graph()
@@ -21,16 +23,11 @@ class ObjectViewer:
 
     def create_page(self):
         show(self.figure)
-        return
 
     def _display_graph(self):
-        # Generate source
         # TODO: generate source using pandas and injecting data every second
 
-        data = {'x': [1, 2, 3, 4, 5],
-                'y': [6, 7, 2, 3, 6]}
-
-        graph_source = ColumnDataSource(data)
+        graph_source = ColumnDataSource(self.data)
         # Create figure
         self.figure = figure(title='2d map',
                              tools='pan,box_zoom,box_select,reset',
@@ -38,8 +35,13 @@ class ObjectViewer:
                              plot_height=600)
 
         # Create plot
-        self.graph_plot = self.figure.circle('x', 'y', source=graph_source, size=20, color='navy', alpha=0.6)
-        return
+        self.graph_plot = self.figure.circle('x', 'y', source=graph_source, size=20, color='navy', alpha=0.6,
+                                             line_color="#3288bd", line_width=3)
+
+    def update_source(self, data):
+        new_source = ColumnDataSource(data)
+        self.graph_plot = self.figure.circle('x', 'y', source=new_source, size=20, color='navy', alpha=0.6,
+                                             line_color="#3288bd", line_width=3)
 
 if __name__ == "__main__":
     print("Started Object viewer {}".format(__version__ ))
