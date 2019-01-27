@@ -2,7 +2,7 @@
 
 """Main module."""
 
-import pandas as pd
+from time import sleep
 from bokeh.plotting import figure, output_file, show
 from bokeh.models import ColumnDataSource
 
@@ -39,9 +39,8 @@ class ObjectViewer:
                                              line_color="#3288bd", line_width=3)
 
     def update_source(self, data):
-        new_source = ColumnDataSource(data)
-        self.graph_plot = self.figure.circle('x', 'y', source=new_source, size=20, color='navy', alpha=0.6,
-                                             line_color="#3288bd", line_width=3)
+        self.graph_plot.data_source = ColumnDataSource(data)
+
 
 if __name__ == "__main__":
     print("Started Object viewer {}".format(__version__ ))
@@ -56,7 +55,8 @@ if __name__ == "__main__":
     viewer.update_source(data)
     viewer.create_page()
 
+    sleep(1)
     data = {'x': [1],
-            'y': [1],
+            'y': [1.1],
             'uid': [1]}
     viewer.update_source(data)
