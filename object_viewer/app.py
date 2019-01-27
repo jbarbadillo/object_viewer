@@ -29,6 +29,8 @@ class ObjectViewer:
 
     def _display_graph(self):
         # Generate source
+        # TODO: generate source using pandas and injecting data every second
+        
         data = {'x': [1, 2, 3, 4, 5],
                 'y': [6, 7, 2, 3, 6]}
 
