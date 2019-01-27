@@ -3,7 +3,7 @@
 """Main module."""
 
 from object_viewer.__init__ import __version__
-import bokeh.plotting
+from bokeh.plotting import figure, output_file, show
 
 
 if __name__ == "__main__":
