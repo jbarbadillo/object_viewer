@@ -7,13 +7,6 @@ import pandas as pd
 from bokeh.plotting import figure, output_file, show
 from bokeh.models import ColumnDataSource
 
-def render_plot(circle_x, circle_y, square_x, square_y):
-    p.circle_x(circle_x, circle_y, size=20, color="navy", alpha=0.5)
-    p.square(square_x, square_y, size=20, color="olive", alpha=0.5)
-
-    # show the results
-    show(p)
-
 class ObjectViewer:
     def __init__(self):
         self.coords = {} # generate data with pandas cols?
@@ -30,9 +23,9 @@ class ObjectViewer:
     def _display_graph(self):
         # Generate source
         # TODO: generate source using pandas and injecting data every second
-        
+
         data = {'x': [1, 2, 3, 4, 5],
-                'y': [6, 7, 2, 3, 6]}
+                'y': [6, 7, 2, 3, 6]}]
 
         graph_source = ColumnDataSource(data)
         # Create figure
