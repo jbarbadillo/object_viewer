@@ -13,8 +13,8 @@ class ObjectViewer:
 
     def __init__(self):
         self.data = {'x': [],
-                       'y': [],
-                       'uid': []} # generate data with pandas cols?
+                     'y': [],
+                     'uid': []} # generate data with pandas cols?
         self.figure = None
         self.graph_plot = None
         self._display_graph()
@@ -50,4 +50,13 @@ if __name__ == "__main__":
     output_file("line.html")
 
     viewer = ObjectViewer()
+    data = {'x': [1],
+            'y': [1],
+            'uid': [1]}
+    viewer.update_source(data)
     viewer.create_page()
+
+    data = {'x': [1],
+            'y': [1],
+            'uid': [1]}
+    viewer.update_source(data)
