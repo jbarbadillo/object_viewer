@@ -5,7 +5,6 @@
 
 import pytest
 
-
 from object_viewer import object_viewer
 
 
