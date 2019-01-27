@@ -5,7 +5,7 @@
 from object_viewer.__init__ import __version__
 import pandas as pd
 from bokeh.plotting import figure, output_file, show
-from bokeh import models
+from bokeh.models import ColumnDataSource
 
 def render_plot(circle_x, circle_y, square_x, square_y):
     p.circle_x(circle_x, circle_y, size=20, color="navy", alpha=0.5)
@@ -16,34 +16,35 @@ def render_plot(circle_x, circle_y, square_x, square_y):
 
 class ObjectViewer:
     def __init__(self):
-        self.coords = {}
-        self.graph_fig = None
+        self.coords = {} # generate data with pandas cols?
+        self.figure = None
         self.graph_plot = None
         self._display_graph()
 
         # self.graph_plot.data_source.on_change('selected', self.graph_update)
 
     def create_page(self):
-        show(self.graph_fig)
+        show(self.figure)
         return
 
     def _display_graph(self):
         # Generate source
-        graph_source = models.ColumnDataSource(self.coords)
+        data = {'x': [1, 2, 3, 4, 5],
+                'y': [6, 7, 2, 3, 6]}
+
+        graph_source = ColumnDataSource(data)
         # Create figure
-        self.graph_fig = figure(title='2d map', tools='pan,box_zoom,box_select,reset')
+        self.figure = figure(title='2d map', tools='pan,box_zoom,box_select,reset', plot_width=800, plot_height=800)
         
         # Create plot
-        self.graph_plot = self.graph_fig.scatter('x', 'y', source=graph_source, color='color', alpha=0.6)
+        self.graph_plot = self.figure.circle('x', 'y', source=graph_source, size=20, color='navy', alpha=0.6)
         return
 
 if __name__ == "__main__":
     print("Started Object viewer {}".format(__version__ ))
 
     # output to static HTML file
-    output_file("line.html")
-
-    p = figure(plot_width=400, plot_height=400)
+    output_file("line.html")    
 
     circle_x = [1, 2]
     circle_y = [6, 7]
