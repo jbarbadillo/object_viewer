@@ -16,6 +16,8 @@ if __name__ == "__main__":
 
     # add a circle renderer with a size, color, and alpha
     p.circle([1, 2, 3, 4, 5], [6, 7, 2, 4, 5], size=20, color="navy", alpha=0.5)
+    p.square([1, 2, 3, 4, 5], [7, 8, 3, 5, 6], size=20, color="olive", alpha=0.5)
+
 
     # show the results
     show(p)
