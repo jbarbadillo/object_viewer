@@ -34,7 +34,7 @@ class ObjectViewer:
 
         graph_source = ColumnDataSource(data)
         # Create figure
-        self.figure = figure(title='2d map', tools='pan,box_zoom,box_select,reset', plot_width=800, plot_height=800)
+        self.figure = figure(title='2d map', tools='pan,box_zoom,box_select,reset', plot_width=600, plot_height=600)
         
         # Create plot
         self.graph_plot = self.figure.circle('x', 'y', source=graph_source, size=20, color='navy', alpha=0.6)
