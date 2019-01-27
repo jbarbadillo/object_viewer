@@ -3,7 +3,7 @@
 """Main module."""
 
 from object_viewer.__init__ import __version__
-from bokeh.plotting import figure, output_file, show, hplot
+from bokeh.plotting import figure, output_file, show
 from bokeh import models
 
 def render_plot(circle_x, circle_y, square_x, square_y):
@@ -23,7 +23,7 @@ class ObjectViewer:
         # self.graph_plot.data_source.on_change('selected', self.graph_update)
 
     def create_page(self):
-        show(hplot(self.graph_fig))
+        show(self.graph_fig)
         return
 
     def _display_graph(self):
@@ -50,6 +50,7 @@ if __name__ == "__main__":
     square_y = [6.1, 7.1]
     
     viewer = ObjectViewer()
+    viewer.create_page()
 
 
 
