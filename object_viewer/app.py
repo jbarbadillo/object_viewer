@@ -3,7 +3,7 @@
 """Main module."""
 
 from time import sleep
-from bokeh.plotting import figure, output_file, show
+from bokeh.plotting import figure, output_file, show, curdoc
 from bokeh.models import ColumnDataSource
 
 from object_viewer.__init__ import __version__
@@ -16,7 +16,8 @@ class ObjectViewer:
                      'y': [],
                      'uid': []} # generate data with pandas cols?
         self.graph_source = None
-        self.figure = None
+        self.figure = figure(x_range=(-2, 2), y_range=(-2, 2), toolbar_location=None)
+        self.figure.border_fill_color = 'black'
         self.graph_plot = None
         self._display_graph()
 
@@ -29,11 +30,7 @@ class ObjectViewer:
         # TODO: generate source using pandas and injecting data every second
 
         self.graph_source = ColumnDataSource(self.data)
-        # Create figure
-        self.figure = figure(title='2d map',
-                             tools='pan,box_zoom,box_select,reset',
-                             plot_width=600,
-                             plot_height=600)
+
 
         # Create plot
         self.graph_plot = self.figure.circle('x', 'y', source=self.graph_source, size=20, color='navy', alpha=0.6,
@@ -47,8 +44,7 @@ class ObjectViewer:
 if __name__ == "__main__":
     print("Started Object viewer {}".format(__version__ ))
 
-    # output to static HTML file
-    output_file("line.html")
+
 
     viewer = ObjectViewer()
     data = {'x': [1],
