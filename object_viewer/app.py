@@ -15,25 +15,20 @@ class ObjectViewer:
         self.figure = figure(x_range=(-2, 2), y_range=(-2, 2), toolbar_location=None)
         self.figure.border_fill_color = 'black'
 
-        # TODO: create glyph circle renderer
-        self.circle_renderer = self.figure.circle()
+        self.circle_renderer = self.figure.circle(x='x', y='y', size=20, color="olive", alpha=0.5)
         self.source = self.circle_renderer.data_source
 
-        # TODO: create a callback
+    def callback(self, new_data):
+        self.source.data = new_data
+
 
 
 if __name__ == "__main__":
     print("Started Object viewer {}".format(__version__ ))
 
-
+    # TODO: create datasource and add callback on data source change
 
     viewer = ObjectViewer()
-    data = {'x': [1],
-            'y': [1],
-            'uid': [1]}
 
 
-    sleep(1)
-    data = {'x': [1],
-            'y': [1.1],
-            'uid': [1]}
+    curdoc().add_root(viewer.figure)
