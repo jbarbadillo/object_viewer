@@ -12,7 +12,12 @@ A 2d viewer for moving object's representation
 Features
 --------
 
-The object viewer draws flows of objects.
+The object viewer draws flows of objects. For running the application just
+
+::
+
+    bokeh serve --show object_viewer/app.py
+
 
 Credits
 -------
