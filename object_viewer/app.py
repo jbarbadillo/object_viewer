@@ -5,6 +5,7 @@
 from time import sleep
 from bokeh.plotting import figure, output_file, show, curdoc
 from bokeh.models import ColumnDataSource
+from bokeh.models.callbacks import CustomJS
 
 from object_viewer.__init__ import __version__
 
@@ -30,5 +31,14 @@ if __name__ == "__main__":
 
     viewer = ObjectViewer()
 
+    data = dict(
+        x=[],
+        y=[]
+    )
+    source = ColumnDataSource(data)
+    force_change = CustomJS(args=dict(source=source), code="""
+        source.change.emit()
+    """)
+    source.js_on_change('data', force_change)
 
     curdoc().add_root(viewer.figure)
