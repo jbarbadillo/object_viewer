@@ -32,7 +32,7 @@ class Drawer:
         self.figure.add_layout(labels)
 
     def create_labeled_squares(self):
-        """ Creates circles representation for a given data source """
+        """ Creates squares representation for a given data source """
         self.figure.square(x='x', y='y', source=self.phones_source, size=20, color="color", alpha=0.5)
         labels = LabelSet(x='x', y='y', x_offset=-40, text='names', level='glyph', source=self.phones_source,
                           render_mode='canvas')
