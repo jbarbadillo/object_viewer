@@ -23,7 +23,7 @@ class Drawer:
     def create_labeled_circles(self, source_data):
         """ Creates circles representation for a given data source """
         self.figure.circle(x='x', y='y', source=source_data, size=20, color="color", alpha=0.5)
-        labels = LabelSet(x='x', y='y', text='names', level='glyph', source=source_data, render_mode='css')
+        labels = LabelSet(x='x', y='y', text='names', level='glyph', source=source_data, render_mode='canvas')
         self.figure.add_layout(labels)
 
     @staticmethod
