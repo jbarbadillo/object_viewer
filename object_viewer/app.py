@@ -56,7 +56,9 @@ class Drawer:
     def update_data(self, new_data, new_data_phone):
         """ Updates source with new data """
         self.people_source.data = new_data
-        self.mobile_source.data = new_data_phone
+
+        if new_data_phone:
+            self.mobile_source.data = new_data_phone
 
     def start_fetching_data(self, new_data, new_data_phone):
         """ Method that simulates fetching new data and updating """
