@@ -5,6 +5,7 @@
 from time import sleep
 from threading import Thread
 from functools import partial
+import random
 
 from tornado import gen
 from bokeh.plotting import figure, curdoc
@@ -53,9 +54,9 @@ def fetch_new_data(data):
         doc.add_next_tick_callback(partial(update, data))
 
 def change_color(data):
-    data['color'][0] = "red"
-    data['color'][1] = "green"
-    data['color'][2] = "navy"
+    data['color'][0] = random.choice(["yellow", "red"])
+    data['color'][1] = random.choice(["green", "red"])
+    data['color'][2] = random.choice(["navy", "red"])
     doc.add_next_tick_callback(partial(update, data))
 
 data = dict(
