@@ -53,11 +53,12 @@ class Drawer:
         return data_table
 
     @gen.coroutine
-    def update_data(self, new_data):
+    def update_data(self, new_data, new_data_phone):
         """ Updates source with new data """
         self.people_source.data = new_data
+        self.mobile_source.data = new_data_phone
 
-    def start_fetching_data(self, new_data):
+    def start_fetching_data(self, new_data, new_data_phone):
         """ Method that simulates fetching new data and updating """
         while True:
             # do some blocking computation
@@ -66,8 +67,12 @@ class Drawer:
             new_data['y'][1] -= 0.1
             new_data['y'][2] -= 0.1
 
+            new_data_phone['y'][0] -= 0.1
+            new_data_phone['y'][1] -= 0.1
+            new_data_phone['y'][1] -= 0.1
+
             # but update the document from callback
-            doc.add_next_tick_callback(partial(self.update_data, new_data))
+            doc.add_next_tick_callback(partial(self.update_data, new_data, new_data_phone))
 
     def change_color(self, data_button):
         """ Changes data color and calls update_data """
@@ -94,7 +99,7 @@ def initialize_source_b():
         y=[1.5, 2, 1.5],
         names=["xiaomi", "moto", "bq"],
         ids=["111", "222", "333"],
-        color=["yellow", "yellow", "yellow"]
+        color=["gray", "gray", "gray"]
     )
     data_source = ColumnDataSource(fake_data)
     return data_source, fake_data
@@ -112,6 +117,6 @@ button_1.on_click(partial(drawer.change_color, data_button=data))
 
 doc.add_root(row(drawer.figure, widgetbox(button_1, table)))
 
-thread = Thread(target=drawer.start_fetching_data, args=(data,))
+thread = Thread(target=drawer.start_fetching_data, args=(data, data_b))
 thread.start()
 
