@@ -53,11 +53,11 @@ def fetch_new_data(data):
         # but update the document from callback
         doc.add_next_tick_callback(partial(update, data))
 
-def change_color(data):
-    data['color'][0] = random.choice(["yellow", "red"])
-    data['color'][1] = random.choice(["green", "red"])
-    data['color'][2] = random.choice(["navy", "red"])
-    doc.add_next_tick_callback(partial(update, data))
+def change_color(data_button):
+    data_button['color'][0] = random.choice(["yellow", "red"])
+    data_button['color'][1] = random.choice(["green", "red"])
+    data_button['color'][2] = random.choice(["navy", "red"])
+    doc.add_next_tick_callback(partial(update, data_button))
 
 data = dict(
     x=[-1, 0, 1],
@@ -72,7 +72,8 @@ viewer.create_circles(source)
 table = viewer.create_table(source)
 
 button_1 = Button(label="Change color")
-button_1.js_on_event(events.ButtonClick, change_color(data))
+button_1.on_click(partial(change_color, data_button=data))
+
 doc.add_root(row(viewer.figure, widgetbox(button_1, table)))
 
 thread = Thread(target=fetch_new_data, args=(data,))
