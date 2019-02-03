@@ -13,22 +13,23 @@ from __init__ import __version__
 class ObjectViewer:
     """ Object renderer"""
 
-    def __init__(self):
+    def __init__(self, source_a):
         self.figure = figure(x_range=(-2, 2), y_range=(-2, 2), toolbar_location=None)
-        self.figure.border_fill_color = 'black'
 
-        self.circle_renderer = self.figure.circle(x='x', y='y', size=20, color="olive", alpha=0.5)
+        self.circle_renderer = self.figure.circle(x='x', y='y', source=source_a, size=20, color="olive", alpha=0.5)
         self.source = self.circle_renderer.data_source
 
     def callback(self, new_data):
         self.source.data = new_data
 
+    def update_graph(self):
+        print("shitty")
 
 print("Started Object viewer {}".format(__version__ ))
 
 # TODO: create datasource and add callback on data source change
 
-viewer = ObjectViewer()
+
 
 data = dict(
     x=[1, 2, 0],
@@ -40,4 +41,8 @@ force_change = CustomJS(args=dict(source=source), code="""
 """)
 source.js_on_change('data', force_change)
 
+viewer = ObjectViewer(source)
+
 curdoc().add_root(row(viewer.figure))
+
+
