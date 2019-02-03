@@ -72,7 +72,6 @@ class Drawer:
             for i in range(0, len(new_phones['y'])):
                 new_phones['y'][i] -= 0.1
 
-
             # but update the document from callback
             doc.add_next_tick_callback(partial(self.update_data, new_people, new_phones))
 
