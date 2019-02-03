@@ -121,20 +121,22 @@ def update_with_phone_info(people_data, phone_data):
 
     return ColumnDataSource(people_data)
 
-source_a, data_a = initialize_people_source()
-source_b, data_b = initialize_phone_source()
-source_a = update_with_phone_info(data_a, data_b)
+def main():
+    source_a, data_a = initialize_people_source()
+    source_b, data_b = initialize_phone_source()
+    source_a = update_with_phone_info(data_a, data_b)
 
-drawer = Drawer(source_a, source_b)
-drawer.create_labeled_circles()
-drawer.create_labeled_squares()
-table = drawer.create_table(source_a)
+    drawer = Drawer(source_a, source_b)
+    drawer.create_labeled_circles()
+    drawer.create_labeled_squares()
+    table = drawer.create_table(source_a)
 
-button_change_color = Button(label="Change color")
-button_change_color.on_click(partial(drawer.change_color, data_button=data_a))
+    button_change_color = Button(label="Change color")
+    button_change_color.on_click(partial(drawer.change_color, data_button=data_a))
 
-doc.add_root(row(drawer.figure, widgetbox(button_change_color, table)))
+    doc.add_root(row(drawer.figure, widgetbox(button_change_color, table)))
 
-thread = Thread(target=drawer.start_fetching_data, args=(data_a, data_b))
-thread.start()
+    thread = Thread(target=drawer.start_fetching_data, args=(data_a, data_b))
+    thread.start()
 
+main()
