@@ -52,8 +52,8 @@ def fetch_new_data(data):
         doc.add_next_tick_callback(partial(update, data))
 
 data = dict(
-    x=[1, 2, 0],
-    y=[1, 2, 1],
+    x=[-1, 0, 1],
+    y=[1.5, 2, 1.5],
     names=["Juan", "Carlos", "Baby"]
 )
 source = ColumnDataSource(data)
