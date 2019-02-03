@@ -4,13 +4,11 @@
 
 from time import sleep
 from threading import Thread
-from random import random
 from functools import partial
 
 from tornado import gen
 from bokeh.plotting import figure, curdoc
 from bokeh.models import ColumnDataSource, LabelSet
-from bokeh.models.callbacks import CustomJS
 from bokeh.layouts import row
 
 class ObjectViewer:
