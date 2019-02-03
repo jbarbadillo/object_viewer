@@ -9,8 +9,8 @@ from functools import partial
 from tornado import gen
 from bokeh.plotting import figure, curdoc
 from bokeh.models import ColumnDataSource, LabelSet
-from bokeh.layouts import row
-from bokeh.models.widgets import DataTable, TableColumn
+from bokeh.layouts import row, widgetbox
+from bokeh.models.widgets import DataTable, TableColumn, Button
 
 class ObjectViewer:
     """ Object renderer"""
@@ -62,7 +62,8 @@ viewer = ObjectViewer()
 viewer.create_circles(source)
 table = viewer.create_table(source)
 
-doc.add_root(row(viewer.figure, table))
+button_1 = Button(label="Start")
+doc.add_root(row(viewer.figure, widgetbox(button_1, table)))
 
 thread = Thread(target=fetch_new_data, args=(data,))
 thread.start()
