@@ -9,7 +9,7 @@ from functools import partial
 
 from tornado import gen
 from bokeh.plotting import figure, curdoc
-from bokeh.models import ColumnDataSource
+from bokeh.models import ColumnDataSource, LabelSet
 from bokeh.models.callbacks import CustomJS
 from bokeh.layouts import row
 
@@ -22,20 +22,18 @@ class ObjectViewer:
         self.figure = figure(x_range=(-2, 2), y_range=(-2, 2), toolbar_location=None)
 
         self.circle_renderer = self.figure.circle(x='x', y='y', source=source_a, size=20, color="olive", alpha=0.5)
+        LabelSet(x='x', y='y', text='names', level='glyph',
+                 x_offset=0.2, y_offset=0.2, source=source_a, render_mode='canvas')
         self.source = self.circle_renderer.data_source
 
-    def callback(self, new_data):
-        self.source.data = new_data
-
-    def update_graph(self):
-        print("shitty")
 
 
 doc = curdoc()
 
 data = dict(
     x=[1, 2, 0],
-    y=[1, 2, 1]
+    y=[1, 2, 1],
+    names=["Juan", "Carlos", "Baby"]
 )
 source = ColumnDataSource(data)
 
@@ -46,7 +44,7 @@ def update_graph(data):
 def update(data):
     while True:
         # do some blocking computation
-        sleep(0.1)
+        sleep(0.5)
         data['y'][0] -= 0.1
         data['y'][1] -= 0.1
         data['y'][2] -= 0.1
