@@ -104,6 +104,7 @@ source_b, data_b = initialize_source_b()
 
 drawer = Drawer(source_a, source_b)
 drawer.create_labeled_circles()
+drawer.create_labeled_squares()
 table = drawer.create_table(source_a)
 
 button_1 = Button(label="Change color")
