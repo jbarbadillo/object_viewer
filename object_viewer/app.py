@@ -23,10 +23,10 @@ class Drawer:
         self.figure = figure(x_range=(-2, 2), y_range=(-2, 2), toolbar_location=None,
                              title="Live object positions monitor")
 
-    def create_labeled_circles(self, source_data):
+    def create_labeled_circles(self):
         """ Creates circles representation for a given data source """
-        self.figure.circle(x='x', y='y', source=source_data, size=20, color="color", alpha=0.5)
-        labels = LabelSet(x='x', y='y', x_offset=20, text='names', level='glyph', source=source_data,
+        self.figure.circle(x='x', y='y', source=self.source, size=20, color="color", alpha=0.5)
+        labels = LabelSet(x='x', y='y', x_offset=20, text='names', level='glyph', source=self.source,
                           render_mode='canvas')
         self.figure.add_layout(labels)
 
@@ -48,7 +48,7 @@ class Drawer:
         """ Updates source with new data """
         self.source.data = new_data
 
-    def fetch_new_data(self, new_data):
+    def start_fetching_data(self, new_data):
         """ Method that simulates fetching new data and updating """
         while True:
             # do some blocking computation
@@ -68,17 +68,20 @@ class Drawer:
         doc.add_next_tick_callback(partial(self.update_data, data_button))
 
 
+def initialize_source():
+    data = dict(
+        x=[-1, 0, 1],
+        y=[1.5, 2, 1.5],
+        names=["Tocho", "Muy tocho", "No tan tocho"],
+        ids=["111", "222", "333"],
+        color=["yellow", "yellow", "yellow"]
+    )
+    data_source = ColumnDataSource(data)
+    return data_source
 
-data = dict(
-    x=[-1, 0, 1],
-    y=[1.5, 2, 1.5],
-    names=["Tocho", "Muy tocho", "No tan tocho"],
-    color=["yellow", "yellow", "yellow"]
-)
-source = ColumnDataSource(data)
-
+source = initialize_source()
 drawer = Drawer(source)
-drawer.create_labeled_circles(source)
+drawer.create_labeled_circles()
 table = drawer.create_table(source)
 
 button_1 = Button(label="Change color")
@@ -86,6 +89,6 @@ button_1.on_click(partial(drawer.change_color, data_button=data))
 
 doc.add_root(row(drawer.figure, widgetbox(button_1, table)))
 
-thread = Thread(target=drawer.fetch_new_data, args=(data,))
+thread = Thread(target=drawer.start_fetching_data, args=(data,))
 thread.start()
 
