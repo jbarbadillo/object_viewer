@@ -89,6 +89,7 @@ def initialize_people_source():
         x=[-1, 0, 1],
         y=[1.5, 2, 1.5],
         names=["Tocho", "Muy tocho", "No tan tocho"],
+        phones=["-", "-", "-"],
         ids=["111", "222", "333"],
         color=["yellow", "yellow", "yellow"]
     )
@@ -106,13 +107,24 @@ def initialize_phone_source():
     data_source = ColumnDataSource(fake_data)
     return data_source, fake_data
 
-def update_with_phone_info(phone_source):
-    # TODO: update source people with info from source mobile
-    pass
+def find_phone(p_id, phone_data):
+    if p_id in phone_data['ids']:
+        position = phone_data['ids'].index(p_id)
+        return phone_data['names'][position]
+
+    return "-"
+
+def update_with_phone_info(people_data, phone_data):
+    for p_id in people_data["ids"]:
+        phone = find_phone(p_id, phone_data)
+        pos = people_data['ids'].index(p_id)
+        people_data["phones"][pos] = phone
+
+    return ColumnDataSource(people_data)
 
 source_a, data_a = initialize_people_source()
 source_b, data_b = initialize_phone_source()
-# source_a = update_with_phone_info(data_b)
+source_a = update_with_phone_info(data_a, data_b)
 
 drawer = Drawer(source_a, source_b)
 drawer.create_labeled_circles()
