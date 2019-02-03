@@ -10,6 +10,7 @@ from tornado import gen
 from bokeh.plotting import figure, curdoc
 from bokeh.models import ColumnDataSource, LabelSet
 from bokeh.layouts import row
+from bokeh.models.widgets import DataTable, TableColumn
 
 class ObjectViewer:
     """ Object renderer"""
@@ -22,14 +23,17 @@ class ObjectViewer:
         labels = LabelSet(x='x', y='y', text='names', level='glyph', source=source_data, render_mode='css')
         self.figure.add_layout(labels)
 
-doc = curdoc()
+    @staticmethod
+    def create_table(source_data):
+        columns = [
+                TableColumn(field="x", title="X"),
+                TableColumn(field="y", title="Y"),
+                TableColumn(field="names", title="Name"),
+            ]
+        data_table = DataTable(source=source_data, columns=columns, width=400, height=280)
+        return data_table
 
-data = dict(
-    x=[1, 2, 0],
-    y=[1, 2, 1],
-    names=["Juan", "Carlos", "Baby"]
-)
-source = ColumnDataSource(data)
+doc = curdoc()
 
 @gen.coroutine
 def update(data):
@@ -46,11 +50,18 @@ def fetch_new_data(data):
         # but update the document from callback
         doc.add_next_tick_callback(partial(update, data))
 
+data = dict(
+    x=[1, 2, 0],
+    y=[1, 2, 1],
+    names=["Juan", "Carlos", "Baby"]
+)
+source = ColumnDataSource(data)
 
 viewer = ObjectViewer()
 viewer.create_circles(source)
+table = viewer.create_table(source)
 
-doc.add_root(row(viewer.figure))
+doc.add_root(row(viewer.figure, table))
 
 thread = Thread(target=fetch_new_data, args=(data,))
 thread.start()
