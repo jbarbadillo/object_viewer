@@ -18,15 +18,23 @@ doc = curdoc()
 class Drawer:
     """ Object drawer"""
 
-    def __init__(self, source):
-        self.source = source
+    def __init__(self, people_source, mobile_source):
+        self.people_source = people_source
+        self.mobile_source = mobile_source
         self.figure = figure(x_range=(-2, 2), y_range=(-2, 2), toolbar_location=None,
                              title="Live object positions monitor")
 
     def create_labeled_circles(self):
         """ Creates circles representation for a given data source """
-        self.figure.circle(x='x', y='y', source=self.source, size=20, color="color", alpha=0.5)
-        labels = LabelSet(x='x', y='y', x_offset=20, text='names', level='glyph', source=self.source,
+        self.figure.circle(x='x', y='y', source=self.people_source, size=20, color="color", alpha=0.5)
+        labels = LabelSet(x='x', y='y', x_offset=20, text='names', level='glyph', source=self.people_source,
+                          render_mode='canvas')
+        self.figure.add_layout(labels)
+
+    def create_labeled_squares(self):
+        """ Creates circles representation for a given data source """
+        self.figure.square(x='x', y='y', source=self.mobile_source, size=20, color="color", alpha=0.5)
+        labels = LabelSet(x='x', y='y', x_offset=-20, text='names', level='glyph', source=self.mobile_source,
                           render_mode='canvas')
         self.figure.add_layout(labels)
 
@@ -47,7 +55,7 @@ class Drawer:
     @gen.coroutine
     def update_data(self, new_data):
         """ Updates source with new data """
-        self.source.data = new_data
+        self.people_source.data = new_data
 
     def start_fetching_data(self, new_data):
         """ Method that simulates fetching new data and updating """
@@ -69,7 +77,7 @@ class Drawer:
         doc.add_next_tick_callback(partial(self.update_data, data_button))
 
 
-def initialize_source():
+def initialize_source_a():
     fake_data = dict(
         x=[-1, 0, 1],
         y=[1.5, 2, 1.5],
@@ -80,10 +88,23 @@ def initialize_source():
     data_source = ColumnDataSource(fake_data)
     return data_source, fake_data
 
-source, data = initialize_source()
-drawer = Drawer(source)
+def initialize_source_b():
+    fake_data = dict(
+        x=[-1.1, 0.1, 1.1],
+        y=[1.5, 2, 1.5],
+        names=["xiaomi", "moto", "bq"],
+        ids=["111", "222", "333"],
+        color=["yellow", "yellow", "yellow"]
+    )
+    data_source = ColumnDataSource(fake_data)
+    return data_source, fake_data
+
+source_a, data = initialize_source_a()
+source_b, data_b = initialize_source_b()
+
+drawer = Drawer(source_a, source_b)
 drawer.create_labeled_circles()
-table = drawer.create_table(source)
+table = drawer.create_table(source_a)
 
 button_1 = Button(label="Change color")
 button_1.on_click(partial(drawer.change_color, data_button=data))
