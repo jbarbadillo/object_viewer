@@ -99,8 +99,8 @@ def initialize_people_source():
 
 def initialize_phone_source():
     fake_data = dict(
-        x=[-1.1, 0.1, 1.1],
-        y=[1.5, 2, 1.5],
+        x=[-1.1, 1.1],
+        y=[1.5, 1.5],
         names=["xiaomi", "bq"],
         ids=["111", "333"],
         color=["gray", "gray"]
