@@ -3,11 +3,12 @@
 """Main module."""
 
 from time import sleep
-from bokeh.plotting import figure, output_file, show, curdoc
+from bokeh.plotting import figure, curdoc
 from bokeh.models import ColumnDataSource
 from bokeh.models.callbacks import CustomJS
+from bokeh.layouts import row
 
-from object_viewer.__init__ import __version__
+from __init__ import __version__
 
 class ObjectViewer:
     """ Object renderer"""
@@ -23,22 +24,20 @@ class ObjectViewer:
         self.source.data = new_data
 
 
+print("Started Object viewer {}".format(__version__ ))
 
-if __name__ == "__main__":
-    print("Started Object viewer {}".format(__version__ ))
+# TODO: create datasource and add callback on data source change
 
-    # TODO: create datasource and add callback on data source change
+viewer = ObjectViewer()
 
-    viewer = ObjectViewer()
+data = dict(
+    x=[1, 2, 0],
+    y=[1, 2, 1]
+)
+source = ColumnDataSource(data)
+force_change = CustomJS(args=dict(source=source), code="""
+    source.change.emit()
+""")
+source.js_on_change('data', force_change)
 
-    data = dict(
-        x=[],
-        y=[]
-    )
-    source = ColumnDataSource(data)
-    force_change = CustomJS(args=dict(source=source), code="""
-        source.change.emit()
-    """)
-    source.js_on_change('data', force_change)
-
-    curdoc().add_root(viewer.figure)
+curdoc().add_root(row(viewer.figure))
