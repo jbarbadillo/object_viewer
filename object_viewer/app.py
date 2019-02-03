@@ -84,6 +84,7 @@ class Drawer:
 
 
 def initialize_people_source():
+    """ Generates a initial source for people data """
     fake_data = dict(
         x=[-1, 0, 1],
         y=[1.5, 2, 1.5],
@@ -96,6 +97,7 @@ def initialize_people_source():
     return data_source, fake_data
 
 def initialize_phone_source():
+    """ Generates a initial source for phone data """
     fake_data = dict(
         x=[-1.1, 1.1],
         y=[1.5, 1.5],
@@ -107,6 +109,8 @@ def initialize_phone_source():
     return data_source, fake_data
 
 def find_phone(p_id, phone_data):
+    """ Finds the phone corresponding to the given user id """
+
     if p_id in phone_data['ids']:
         position = phone_data['ids'].index(p_id)
         return phone_data['names'][position]
@@ -114,6 +118,7 @@ def find_phone(p_id, phone_data):
     return "-"
 
 def update_with_phone_info(people_data, phone_data):
+    """ Updates people data with phone information, if available """
     for p_id in people_data["ids"]:
         phone = find_phone(p_id, phone_data)
         pos = people_data['ids'].index(p_id)
@@ -122,6 +127,8 @@ def update_with_phone_info(people_data, phone_data):
     return ColumnDataSource(people_data)
 
 def main():
+    """ Bokeh server main method """
+
     source_a, data_a = initialize_people_source()
     source_b, data_b = initialize_phone_source()
     source_a = update_with_phone_info(data_a, data_b)
