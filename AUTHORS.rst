@@ -5,7 +5,7 @@ Credits
 Development Lead
 ----------------
 
-* Catacrokers Team <catacrokers@gmail.com>
+* jbarbadillo
 
 Contributors
 ------------

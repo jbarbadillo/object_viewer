@@ -2,7 +2,7 @@
 Object Viewer
 =============
 
-A 2d viewer for moving object's representation
+A 2d viewer for monitoring moving objects in a controlled scenario.
 
 
 * Free software: MIT license
@@ -12,7 +12,7 @@ A 2d viewer for moving object's representation
 Features
 --------
 
-The object viewer draws flows of objects. For running the application just
+The object viewer draws objects that consumes from a source. For running the application just do
 
 ::
 
