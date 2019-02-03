@@ -3,6 +3,11 @@
 """Main module."""
 
 from time import sleep
+from threading import Thread
+from random import random
+from functools import partial
+
+from tornado import gen
 from bokeh.plotting import figure, curdoc
 from bokeh.models import ColumnDataSource
 from bokeh.models.callbacks import CustomJS
@@ -25,24 +30,33 @@ class ObjectViewer:
     def update_graph(self):
         print("shitty")
 
-print("Started Object viewer {}".format(__version__ ))
 
-# TODO: create datasource and add callback on data source change
-
-
+doc = curdoc()
 
 data = dict(
     x=[1, 2, 0],
     y=[1, 2, 1]
 )
 source = ColumnDataSource(data)
-force_change = CustomJS(args=dict(source=source), code="""
-    source.change.emit()
-""")
-source.js_on_change('data', force_change)
+
+@gen.coroutine
+def update_graph(x, y):
+    source.data = (dict(x=[x], y=[y]))
+
+def update():
+    while True:
+        # do some blocking computation
+        sleep(0.1)
+        x, y = random(), random()
+
+        # but update the document from callback
+        doc.add_next_tick_callback(partial(update_graph, x=x, y=y))
+
 
 viewer = ObjectViewer(source)
 
-curdoc().add_root(row(viewer.figure))
+doc.add_root(row(viewer.figure))
 
+thread = Thread(target=update)
+thread.start()
 
