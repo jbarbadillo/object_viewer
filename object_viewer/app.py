@@ -47,6 +47,7 @@ class Drawer:
             TableColumn(field="x", title="X", formatter=decimal_formatter),
             TableColumn(field="y", title="Y", formatter=decimal_formatter),
             TableColumn(field="names", title="Name"),
+            TableColumn(field="phones", title="Phone"),
             TableColumn(field="color", title="Color"),
             ]
         data_table = DataTable(source=source_data, columns=columns, width=400, height=280)
