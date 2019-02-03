@@ -27,9 +27,9 @@ class ObjectViewer:
     @staticmethod
     def create_table(source_data):
         columns = [
-                TableColumn(field="x", title="X"),
-                TableColumn(field="y", title="Y"),
-                TableColumn(field="names", title="Name"),
+            TableColumn(field="x", title="X"),
+            TableColumn(field="y", title="Y"),
+            TableColumn(field="names", title="Name"),
             ]
         data_table = DataTable(source=source_data, columns=columns, width=400, height=280)
         return data_table
