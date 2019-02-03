@@ -34,7 +34,7 @@ class Drawer:
     def create_labeled_squares(self):
         """ Creates circles representation for a given data source """
         self.figure.square(x='x', y='y', source=self.mobile_source, size=20, color="color", alpha=0.5)
-        labels = LabelSet(x='x', y='y', x_offset=-20, text='names', level='glyph', source=self.mobile_source,
+        labels = LabelSet(x='x', y='y', x_offset=-40, text='names', level='glyph', source=self.mobile_source,
                           render_mode='canvas')
         self.figure.add_layout(labels)
 
@@ -69,7 +69,7 @@ class Drawer:
 
             new_data_phone['y'][0] -= 0.1
             new_data_phone['y'][1] -= 0.1
-            new_data_phone['y'][1] -= 0.1
+            new_data_phone['y'][2] -= 0.1
 
             # but update the document from callback
             doc.add_next_tick_callback(partial(self.update_data, new_data, new_data_phone))
@@ -79,7 +79,7 @@ class Drawer:
         data_button['color'][0] = random.choice(["yellow", "red"])
         data_button['color'][1] = random.choice(["green", "red"])
         data_button['color'][2] = random.choice(["navy", "red"])
-        doc.add_next_tick_callback(partial(self.update_data, data_button))
+        doc.add_next_tick_callback(partial(self.update_data, data_button, None))
 
 
 def initialize_source_a():
