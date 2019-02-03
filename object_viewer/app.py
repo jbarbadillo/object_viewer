@@ -101,9 +101,9 @@ def initialize_phone_source():
     fake_data = dict(
         x=[-1.1, 0.1, 1.1],
         y=[1.5, 2, 1.5],
-        names=["xiaomi", "moto", "bq"],
-        ids=["111", "222", "333"],
-        color=["gray", "gray", "gray"]
+        names=["xiaomi", "bq"],
+        ids=["111", "333"],
+        color=["gray", "gray"]
     )
     data_source = ColumnDataSource(fake_data)
     return data_source, fake_data
