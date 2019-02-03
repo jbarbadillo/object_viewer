@@ -14,14 +14,13 @@ from bokeh.layouts import row
 class ObjectViewer:
     """ Object renderer"""
 
-    def __init__(self, source_a):
+    def __init__(self):
         self.figure = figure(x_range=(-2, 2), y_range=(-2, 2), toolbar_location=None)
 
-        self.circle_renderer = self.figure.circle(x='x', y='y', source=source_a, size=20, color="olive", alpha=0.5)
-        labels = LabelSet(x='x', y='y', text='names', level='glyph', source=source_a, render_mode='css')
+    def create_circles(self, source_data):
+        self.figure.circle(x='x', y='y', source=source_data, size=20, color="olive", alpha=0.5)
+        labels = LabelSet(x='x', y='y', text='names', level='glyph', source=source_data, render_mode='css')
         self.figure.add_layout(labels)
-
-
 
 doc = curdoc()
 
