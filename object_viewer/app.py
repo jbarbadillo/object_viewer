@@ -16,7 +16,8 @@ class ObjectViewer:
     """ Object renderer"""
 
     def __init__(self):
-        self.figure = figure(x_range=(-2, 2), y_range=(-2, 2), toolbar_location=None)
+        self.figure = figure(x_range=(-2, 2), y_range=(-2, 2), toolbar_location=None,
+                             title="Live object positions monitor")
 
     def create_circles(self, source_data):
         self.figure.circle(x='x', y='y', source=source_data, size=20, color="olive", alpha=0.5)
