@@ -18,9 +18,9 @@ doc = curdoc()
 class Drawer:
     """ Object drawer"""
 
-    def __init__(self, people_source, mobile_source):
+    def __init__(self, people_source, phones_source):
         self.people_source = people_source
-        self.mobile_source = mobile_source
+        self.phones_source = phones_source
         self.figure = figure(x_range=(-2, 2), y_range=(-2, 2), toolbar_location=None,
                              title="Live object positions monitor")
 
@@ -33,8 +33,8 @@ class Drawer:
 
     def create_labeled_squares(self):
         """ Creates circles representation for a given data source """
-        self.figure.square(x='x', y='y', source=self.mobile_source, size=20, color="color", alpha=0.5)
-        labels = LabelSet(x='x', y='y', x_offset=-40, text='names', level='glyph', source=self.mobile_source,
+        self.figure.square(x='x', y='y', source=self.phones_source, size=20, color="color", alpha=0.5)
+        labels = LabelSet(x='x', y='y', x_offset=-40, text='names', level='glyph', source=self.phones_source,
                           render_mode='canvas')
         self.figure.add_layout(labels)
 
@@ -53,28 +53,28 @@ class Drawer:
         return data_table
 
     @gen.coroutine
-    def update_data(self, new_data, new_data_phone):
+    def update_data(self, people_data, phones_data):
         """ Updates source with new data """
-        self.people_source.data = new_data
+        self.people_source.data = people_data
 
-        if new_data_phone:
-            self.mobile_source.data = new_data_phone
+        if phones_data:
+            self.phones_source.data = phones_data
 
-    def start_fetching_data(self, new_data, new_data_phone):
+    def start_fetching_data(self, new_people, new_phones):
         """ Method that simulates fetching new data and updating """
         while True:
             # do some blocking computation
             sleep(0.5)
-            new_data['y'][0] -= 0.1
-            new_data['y'][1] -= 0.1
-            new_data['y'][2] -= 0.1
+            new_people['y'][0] -= 0.1
+            new_people['y'][1] -= 0.1
+            new_people['y'][2] -= 0.1
 
-            new_data_phone['y'][0] -= 0.1
-            new_data_phone['y'][1] -= 0.1
-            new_data_phone['y'][2] -= 0.1
+            new_phones['y'][0] -= 0.1
+            new_phones['y'][1] -= 0.1
+            new_phones['y'][2] -= 0.1
 
             # but update the document from callback
-            doc.add_next_tick_callback(partial(self.update_data, new_data, new_data_phone))
+            doc.add_next_tick_callback(partial(self.update_data, new_people, new_phones))
 
     def change_color(self, data_button):
         """ Changes data color and calls update_data """
@@ -84,7 +84,7 @@ class Drawer:
         doc.add_next_tick_callback(partial(self.update_data, data_button, None))
 
 
-def initialize_source_a():
+def initialize_people_source():
     fake_data = dict(
         x=[-1, 0, 1],
         y=[1.5, 2, 1.5],
@@ -95,7 +95,7 @@ def initialize_source_a():
     data_source = ColumnDataSource(fake_data)
     return data_source, fake_data
 
-def initialize_source_b():
+def initialize_phone_source():
     fake_data = dict(
         x=[-1.1, 0.1, 1.1],
         y=[1.5, 2, 1.5],
@@ -110,8 +110,8 @@ def update_with_phone_info(phone_source):
     # TODOD: update source people with info from source mobile
     pass
 
-source_a, data = initialize_source_a()
-source_b, data_b = initialize_source_b()
+source_a, data = initialize_people_source()
+source_b, data_b = initialize_phone_source()
 # source_a = update_with_phone_info(data_b)
 
 drawer = Drawer(source_a, source_b)
