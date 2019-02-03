@@ -22,9 +22,7 @@ class ObjectViewer:
         self.figure = figure(x_range=(-2, 2), y_range=(-2, 2), toolbar_location=None)
 
         self.circle_renderer = self.figure.circle(x='x', y='y', source=source_a, size=20, color="olive", alpha=0.5)
-        LabelSet(x='x', y='y', text='names', level='glyph',
-                 x_offset=0.2, y_offset=0.2, source=source_a, render_mode='canvas')
-        self.source = self.circle_renderer.data_source
+        LabelSet(x='x', y='y', text='names', level='glyph', source=source_a, render_mode='css')
 
 
 
