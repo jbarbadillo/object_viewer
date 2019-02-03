@@ -11,7 +11,7 @@ from tornado import gen
 from bokeh.plotting import figure, curdoc
 from bokeh.models import ColumnDataSource, LabelSet
 from bokeh.layouts import row, widgetbox
-from bokeh.models.widgets import DataTable, TableColumn, Button
+from bokeh.models.widgets import DataTable, TableColumn, Button, NumberFormatter
 
 class Drawer:
     """ Object drawer"""
@@ -29,9 +29,10 @@ class Drawer:
 
     @staticmethod
     def create_table(source_data):
+        decimal_formatter = NumberFormatter(format='0.0')
         columns = [
-            TableColumn(field="x", title="X"),
-            TableColumn(field="y", title="Y"),
+            TableColumn(field="x", title="X", formatter=decimal_formatter),
+            TableColumn(field="y", title="Y", formatter=decimal_formatter),
             TableColumn(field="names", title="Name"),
             TableColumn(field="color", title="Color"),
             ]
