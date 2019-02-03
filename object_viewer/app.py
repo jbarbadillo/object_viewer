@@ -40,23 +40,25 @@ data = dict(
 source = ColumnDataSource(data)
 
 @gen.coroutine
-def update_graph(x, y):
-    source.data = (dict(x=[x], y=[y]))
+def update_graph(data):
+    source.data = data
 
-def update():
+def update(data):
     while True:
         # do some blocking computation
         sleep(0.1)
-        x, y = random(), random()
+        data['y'][0] -= 0.1
+        data['y'][1] -= 0.1
+        data['y'][2] -= 0.1
 
         # but update the document from callback
-        doc.add_next_tick_callback(partial(update_graph, x=x, y=y))
+        doc.add_next_tick_callback(partial(update_graph, data))
 
 
 viewer = ObjectViewer(source)
 
 doc.add_root(row(viewer.figure))
 
-thread = Thread(target=update)
+thread = Thread(target=update, args=(data,))
 thread.start()
 
