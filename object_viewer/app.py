@@ -61,7 +61,7 @@ def change_color(data_button):
 data = dict(
     x=[-1, 0, 1],
     y=[1.5, 2, 1.5],
-    names=["Juan", "Carlos", "Baby"],
+    names=["Tocho", "Muy tocho", "No tan tocho"],
     color=["yellow", "yellow", "yellow"]
 )
 source = ColumnDataSource(data)
