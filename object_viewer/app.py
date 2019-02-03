@@ -47,7 +47,8 @@ def fetch_new_data(data):
         doc.add_next_tick_callback(partial(update, data))
 
 
-viewer = ObjectViewer(source)
+viewer = ObjectViewer()
+viewer.create_circles(source)
 
 doc.add_root(row(viewer.figure))
 
