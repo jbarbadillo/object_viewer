@@ -13,8 +13,8 @@ from bokeh.models import ColumnDataSource, LabelSet
 from bokeh.layouts import row, widgetbox
 from bokeh.models.widgets import DataTable, TableColumn, Button
 
-class ObjectViewer:
-    """ Object renderer"""
+class Drawer:
+    """ Object drawer"""
 
     def __init__(self):
         self.figure = figure(x_range=(-2, 2), y_range=(-2, 2), toolbar_location=None,
@@ -66,14 +66,14 @@ data = dict(
 )
 source = ColumnDataSource(data)
 
-viewer = ObjectViewer()
-viewer.create_circles(source)
-table = viewer.create_table(source)
+drawer = Drawer()
+drawer.create_circles(source)
+table = drawer.create_table(source)
 
 button_1 = Button(label="Change color")
 button_1.on_click(partial(change_color, data_button=data))
 
-doc.add_root(row(viewer.figure, widgetbox(button_1, table)))
+doc.add_root(row(drawer.figure, widgetbox(button_1, table)))
 
 thread = Thread(target=fetch_new_data, args=(data,))
 thread.start()
