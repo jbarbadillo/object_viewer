@@ -66,13 +66,12 @@ class Drawer:
         while True:
             # do some blocking computation
             sleep(0.5)
-            new_people['y'][0] -= 0.1
-            new_people['y'][1] -= 0.1
-            new_people['y'][2] -= 0.1
+            for i in range(0, len(new_people['y'])):
+                new_people['y'][i] -= 0.1
 
-            new_phones['y'][0] -= 0.1
-            new_phones['y'][1] -= 0.1
-            new_phones['y'][2] -= 0.1
+            for i in range(0, len(new_phones['y'])):
+                new_phones['y'][i] -= 0.1
+
 
             # but update the document from callback
             doc.add_next_tick_callback(partial(self.update_data, new_people, new_phones))
