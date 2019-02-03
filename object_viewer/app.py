@@ -104,8 +104,13 @@ def initialize_source_b():
     data_source = ColumnDataSource(fake_data)
     return data_source, fake_data
 
+def update_with_phone_info(phone_source):
+    # TODOD: update source people with info from source mobile
+    pass
+
 source_a, data = initialize_source_a()
 source_b, data_b = initialize_source_b()
+# source_a = update_with_phone_info(data_b)
 
 drawer = Drawer(source_a, source_b)
 drawer.create_labeled_circles()
