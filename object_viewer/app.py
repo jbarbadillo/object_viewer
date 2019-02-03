@@ -69,17 +69,17 @@ class Drawer:
 
 
 def initialize_source():
-    data = dict(
+    fake_data = dict(
         x=[-1, 0, 1],
         y=[1.5, 2, 1.5],
         names=["Tocho", "Muy tocho", "No tan tocho"],
         ids=["111", "222", "333"],
         color=["yellow", "yellow", "yellow"]
     )
-    data_source = ColumnDataSource(data)
-    return data_source
+    data_source = ColumnDataSource(fake_data)
+    return data_source, fake_data
 
-source = initialize_source()
+source, data = initialize_source()
 drawer = Drawer(source)
 drawer.create_labeled_circles()
 table = drawer.create_table(source)
