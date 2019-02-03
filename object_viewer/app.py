@@ -35,6 +35,7 @@ class Drawer:
         """ Creates a table from the source data """
         decimal_formatter = NumberFormatter(format='0.0')
         columns = [
+            TableColumn(field="ids", title="Id"),
             TableColumn(field="x", title="X", formatter=decimal_formatter),
             TableColumn(field="y", title="Y", formatter=decimal_formatter),
             TableColumn(field="names", title="Name"),
