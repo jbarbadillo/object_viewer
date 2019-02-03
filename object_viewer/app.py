@@ -13,8 +13,6 @@ from bokeh.models import ColumnDataSource, LabelSet
 from bokeh.models.callbacks import CustomJS
 from bokeh.layouts import row
 
-from __init__ import __version__
-
 class ObjectViewer:
     """ Object renderer"""
 
