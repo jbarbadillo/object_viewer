@@ -12,7 +12,6 @@ from bokeh.plotting import figure, curdoc
 from bokeh.models import ColumnDataSource, LabelSet
 from bokeh.layouts import row, widgetbox
 from bokeh.models.widgets import DataTable, TableColumn, Button
-from bokeh import events
 
 class ObjectViewer:
     """ Object renderer"""
