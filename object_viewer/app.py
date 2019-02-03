@@ -13,10 +13,13 @@ from bokeh.models import ColumnDataSource, LabelSet
 from bokeh.layouts import row, widgetbox
 from bokeh.models.widgets import DataTable, TableColumn, Button, NumberFormatter
 
+doc = curdoc()
+
 class Drawer:
     """ Object drawer"""
 
-    def __init__(self):
+    def __init__(self, source):
+        self.source = source
         self.figure = figure(x_range=(-2, 2), y_range=(-2, 2), toolbar_location=None,
                              title="Live object positions monitor")
 
@@ -29,6 +32,7 @@ class Drawer:
 
     @staticmethod
     def create_table(source_data):
+        """ Creates a table from the source data """
         decimal_formatter = NumberFormatter(format='0.0')
         columns = [
             TableColumn(field="x", title="X", formatter=decimal_formatter),
@@ -39,28 +43,31 @@ class Drawer:
         data_table = DataTable(source=source_data, columns=columns, width=400, height=280)
         return data_table
 
-doc = curdoc()
+    @gen.coroutine
+    def update_data(self, new_data):
+        """ Updates source with new data """
+        self.source.data = new_data
 
-@gen.coroutine
-def update(data):
-    source.data = data
+    def fetch_new_data(self, new_data):
+        """ Method that simulates fetching new data and updating """
+        while True:
+            # do some blocking computation
+            sleep(0.5)
+            new_data['y'][0] -= 0.1
+            new_data['y'][1] -= 0.1
+            new_data['y'][2] -= 0.1
 
-def fetch_new_data(data):
-    while True:
-        # do some blocking computation
-        sleep(0.5)
-        data['y'][0] -= 0.1
-        data['y'][1] -= 0.1
-        data['y'][2] -= 0.1
+            # but update the document from callback
+            doc.add_next_tick_callback(partial(self.update_data, new_data))
 
-        # but update the document from callback
-        doc.add_next_tick_callback(partial(update, data))
+    def change_color(self, data_button):
+        """ Changes data color and calls update_data """
+        data_button['color'][0] = random.choice(["yellow", "red"])
+        data_button['color'][1] = random.choice(["green", "red"])
+        data_button['color'][2] = random.choice(["navy", "red"])
+        doc.add_next_tick_callback(partial(self.update_data, data_button))
 
-def change_color(data_button):
-    data_button['color'][0] = random.choice(["yellow", "red"])
-    data_button['color'][1] = random.choice(["green", "red"])
-    data_button['color'][2] = random.choice(["navy", "red"])
-    doc.add_next_tick_callback(partial(update, data_button))
+
 
 data = dict(
     x=[-1, 0, 1],
@@ -70,15 +77,15 @@ data = dict(
 )
 source = ColumnDataSource(data)
 
-drawer = Drawer()
+drawer = Drawer(source)
 drawer.create_labeled_circles(source)
 table = drawer.create_table(source)
 
 button_1 = Button(label="Change color")
-button_1.on_click(partial(change_color, data_button=data))
+button_1.on_click(partial(drawer.change_color, data_button=data))
 
 doc.add_root(row(drawer.figure, widgetbox(button_1, table)))
 
-thread = Thread(target=fetch_new_data, args=(data,))
+thread = Thread(target=drawer.fetch_new_data, args=(data,))
 thread.start()
 
