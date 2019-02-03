@@ -107,10 +107,10 @@ def initialize_phone_source():
     return data_source, fake_data
 
 def update_with_phone_info(phone_source):
-    # TODOD: update source people with info from source mobile
+    # TODO: update source people with info from source mobile
     pass
 
-source_a, data = initialize_people_source()
+source_a, data_a = initialize_people_source()
 source_b, data_b = initialize_phone_source()
 # source_a = update_with_phone_info(data_b)
 
@@ -119,11 +119,11 @@ drawer.create_labeled_circles()
 drawer.create_labeled_squares()
 table = drawer.create_table(source_a)
 
-button_1 = Button(label="Change color")
-button_1.on_click(partial(drawer.change_color, data_button=data))
+button_change_color = Button(label="Change color")
+button_change_color.on_click(partial(drawer.change_color, data_button=data_a))
 
-doc.add_root(row(drawer.figure, widgetbox(button_1, table)))
+doc.add_root(row(drawer.figure, widgetbox(button_change_color, table)))
 
-thread = Thread(target=drawer.start_fetching_data, args=(data, data_b))
+thread = Thread(target=drawer.start_fetching_data, args=(data_a, data_b))
 thread.start()
 
