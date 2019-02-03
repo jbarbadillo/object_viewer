@@ -33,10 +33,10 @@ data = dict(
 source = ColumnDataSource(data)
 
 @gen.coroutine
-def update_graph(data):
+def update(data):
     source.data = data
 
-def update(data):
+def fetch_new_data(data):
     while True:
         # do some blocking computation
         sleep(0.5)
@@ -45,13 +45,13 @@ def update(data):
         data['y'][2] -= 0.1
 
         # but update the document from callback
-        doc.add_next_tick_callback(partial(update_graph, data))
+        doc.add_next_tick_callback(partial(update, data))
 
 
 viewer = ObjectViewer(source)
 
 doc.add_root(row(viewer.figure))
 
-thread = Thread(target=update, args=(data,))
+thread = Thread(target=fetch_new_data, args=(data,))
 thread.start()
 
