@@ -20,7 +20,8 @@ class Drawer:
         self.figure = figure(x_range=(-2, 2), y_range=(-2, 2), toolbar_location=None,
                              title="Live object positions monitor")
 
-    def create_circles(self, source_data):
+    def create_labeled_circles(self, source_data):
+        """ Creates circles representation for a given data source """
         self.figure.circle(x='x', y='y', source=source_data, size=20, color="color", alpha=0.5)
         labels = LabelSet(x='x', y='y', text='names', level='glyph', source=source_data, render_mode='css')
         self.figure.add_layout(labels)
@@ -67,7 +68,7 @@ data = dict(
 source = ColumnDataSource(data)
 
 drawer = Drawer()
-drawer.create_circles(source)
+drawer.create_labeled_circles(source)
 table = drawer.create_table(source)
 
 button_1 = Button(label="Change color")
